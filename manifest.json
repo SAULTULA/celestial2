@@ -4,6 +4,7 @@
   "description": "Radio Cristiana desde Campo Grande, Misiones. Una Radio con Propósito.",
   "start_url": "./index.html",
   "scope": "./",
+  "id": "/celestial2/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#0a0a1a",
@@ -13,19 +14,19 @@
   "categories": ["music", "entertainment", "religion"],
   "icons": [
     {
-      "src": "logo.png",
+      "src": "./logo.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "logo.png",
+      "src": "./logo.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "logo.png",
+      "src": "./logo.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
