@@ -1,0 +1,379 @@
+/* ==================================================================
+   CELESTIAL FM 106.7 — Hoja de estilos principal
+   ================================================================== */
+
+/* ---- RESET Y VARIABLES ---- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-dark: #0a0a1a;
+  --bg-card: rgba(12, 18, 35, 0.75);
+  --gold: #d4af37;
+  --gold-light: #f0d060;
+  --blue-accent: #1e90ff;
+  --text: #e8edf5;
+  --text-dim: #9aa7bd;
+  --radius: 20px;
+  --glass: blur(20px);
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg-dark);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ---- FONDO DINÁMICO ---- */
+#bg-blur {
+  position: fixed;
+  inset: -20px;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(40px) brightness(0.35) saturate(1.5);
+  transition: background-image 1.2s ease;
+  pointer-events: none;
+}
+#bg-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(160deg, rgba(5,10,25,0.85) 0%, rgba(10,15,35,0.92) 100%);
+  pointer-events: none;
+}
+
+/* ---- BOTÓN INSTALAR APP ---- */
+.btn-install {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, var(--gold), #b8960c);
+  color: #0a0a1a;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 6px 25px rgba(212, 175, 55, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.15);
+  transition: all 0.3s ease;
+  animation: installPulse 2.4s ease-in-out infinite;
+}
+.btn-install:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 10px 35px rgba(212, 175, 55, 0.6);
+}
+.btn-install:active { transform: scale(0.97); }
+.btn-install svg { flex-shrink: 0; }
+
+@keyframes installPulse {
+  0%, 100% { box-shadow: 0 6px 25px rgba(212, 175, 55, 0.4), 0 0 0 0 rgba(212, 175, 55, 0.6); }
+  50%      { box-shadow: 0 6px 25px rgba(212, 175, 55, 0.4), 0 0 0 12px rgba(212, 175, 55, 0); }
+}
+
+/* ---- CONTENEDOR PRINCIPAL ---- */
+.player {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 420px;
+  background: var(--bg-card);
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 28px;
+  padding: 24px 22px 20px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(212,175,55,0.15);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+/* ---- LOGO ---- */
+.logo-badge {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(212,175,55,0.5);
+  box-shadow: 0 0 15px rgba(212,175,55,0.25);
+  z-index: 3;
+  transition: transform 0.3s;
+}
+.logo-badge:hover { transform: scale(1.08); }
+
+/* ---- NOMBRE EMISORA ---- */
+.station-name {
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.station-slogan {
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+/* ---- VINILO ---- */
+.vinyl-wrapper {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 16px;
+}
+.vinyl-disc {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, #1a1a1a, #2a2a2a, #111, #222, #1a1a1a);
+  box-shadow:
+    0 0 0 4px rgba(255,255,255,0.05),
+    0 0 0 8px rgba(0,0,0,0.5),
+    0 10px 40px rgba(0,0,0,0.7),
+    inset 0 0 30px rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: spin 20s linear infinite paused;
+  transition: animation-play-state 0.3s;
+  position: relative;
+}
+.vinyl-disc.playing { animation-play-state: running; }
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+.vinyl-disc::after {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.06);
+  pointer-events: none;
+}
+.vinyl-disc::before {
+  content: '';
+  position: absolute;
+  inset: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.04);
+  pointer-events: none;
+}
+.vinyl-cover {
+  width: 56%;
+  height: 56%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(212,175,55,0.6);
+  box-shadow: 0 0 20px rgba(212,175,55,0.15);
+  z-index: 2;
+  background: #111;
+  transition: opacity 0.4s;
+}
+
+/* ---- INFO CANCIÓN ---- */
+.song-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 1.2em;
+}
+.song-artist {
+  font-size: 0.8rem;
+  color: var(--gold-light);
+  margin-bottom: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 1em;
+}
+
+/* ---- VISUALIZADOR ---- */
+.visualizer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 3px;
+  height: 40px;
+  margin-bottom: 14px;
+  padding: 0 4px;
+}
+.visualizer .bar {
+  width: 4px;
+  min-height: 3px;
+  background: linear-gradient(to top, var(--gold), var(--gold-light), #fff8e0);
+  border-radius: 2px;
+  transition: height 0.08s ease;
+  opacity: 0.85;
+}
+
+/* ---- CONTROLES ---- */
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 16px;
+}
+.btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  position: relative;
+  outline: none;
+}
+.btn:active { transform: scale(0.92); }
+
+.btn-play {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), #b8960c);
+  color: #0a0a1a;
+  font-size: 1.6rem;
+  box-shadow: 0 6px 25px rgba(212,175,55,0.4), 0 0 0 1px rgba(255,255,255,0.1);
+  transition: all 0.3s ease;
+}
+.btn-play:hover {
+  box-shadow: 0 8px 35px rgba(212,175,55,0.6);
+  transform: scale(1.06);
+}
+.btn-play svg { width: 26px; height: 26px; fill: #0a0a1a; }
+.btn-play .spinner {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: #fff8e0;
+  animation: spin 0.8s linear infinite;
+  display: none;
+}
+.btn-play.loading .spinner { display: block; }
+.btn-play.loading svg { opacity: 0.3; }
+.btn-play.playing .spinner { display: none; }
+.btn-play.playing svg { opacity: 1; }
+
+/* ---- VOLUMEN ---- */
+.volume-wrap { position: relative; }
+.btn-volume {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: var(--text-dim);
+  font-size: 1.1rem;
+}
+.btn-volume:hover { color: var(--gold); border-color: var(--gold); }
+
+.volume-pop {
+  position: absolute;
+  bottom: 52px;
+  left: 50%;
+  transform: translateX(-50%) scaleY(0);
+  transform-origin: bottom;
+  background: rgba(15,20,40,0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 12px 8px;
+  transition: transform 0.25s ease, opacity 0.25s;
+  opacity: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.volume-pop.open { transform: translateX(-50%) scaleY(1); opacity: 1; pointer-events: auto; }
+.volume-pop input[type="range"] {
+  -webkit-appearance: none;
+  width: 100px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.15);
+  outline: none;
+  transform: rotate(-90deg);
+  margin: 30px -30px;
+}
+.volume-pop input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--gold);
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(212,175,55,0.5);
+}
+
+/* ---- TICKER ---- */
+.ticker-wrap {
+  width: 100%;
+  overflow: hidden;
+  background: rgba(212,175,55,0.06);
+  border-top: 1px solid rgba(212,175,55,0.2);
+  border-bottom: 1px solid rgba(212,175,55,0.2);
+  padding: 8px 0;
+  margin-top: 4px;
+  position: relative;
+}
+.ticker-text {
+  display: inline-block;
+  white-space: nowrap;
+  padding-left: 100%;
+  animation: ticker 30s linear infinite;
+  font-size: 0.78rem;
+  color: var(--gold-light);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  text-shadow: 0 0 8px rgba(212,175,55,0.3);
+}
+@keyframes ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+/* ---- FOOTER ---- */
+.footer-info {
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  margin-top: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 420px) {
+  .player { padding: 18px 14px 16px; border-radius: 22px; }
+  .vinyl-wrapper { width: 150px; height: 150px; }
+  .btn-play { width: 56px; height: 56px; }
+  .btn-play .spinner { width: 56px; height: 56px; }
+  .visualizer { height: 32px; }
+  .visualizer .bar { width: 3px; }
+  .btn-install { top: 12px; right: 12px; padding: 8px 12px; font-size: 0.72rem; }
+}
